@@ -1,0 +1,526 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-26 00:32+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: backend/urls.py:5
+msgid "ICU Monitoring System"
+msgstr "ICU病人健康管理和预测系统"
+
+#: icu/admin.py:21
+msgid "Basic Information"
+msgstr "基本信息"
+
+#: icu/admin.py:24
+msgid "Contact Information"
+msgstr "联系方式"
+
+#: icu/admin.py:25
+msgid "Other Information"
+msgstr "其他信息"
+
+#: icu/admin.py:42
+msgid "Patient Information"
+msgstr "患者基本信息"
+
+#: icu/admin.py:54
+msgid "Admission Information"
+msgstr "患者入院记录信息"
+
+#: icu/admin.py:64
+msgid "Discharge Information"
+msgstr "患者出院记录信息"
+
+#: icu/admin.py:74
+msgid "ER Department"
+msgstr "ER 部门"
+
+#: icu/admin.py:83 icu/admin.py:105 icu/models.py:48
+msgid "Patient Name"
+msgstr "患者姓名"
+
+#: icu/admin.py:98
+msgid "ICU Hospitalization Time"
+msgstr ""
+
+#: icu/apps.py:8
+msgid "ICU"
+msgstr "ICU"
+
+#: icu/choices.py:4
+msgid "Male"
+msgstr "男性"
+
+#: icu/choices.py:5
+msgid "Female"
+msgstr "女性"
+
+#: icu/choices.py:8
+msgid "Single"
+msgstr ""
+
+#: icu/choices.py:9
+msgid "Married"
+msgstr ""
+
+#: icu/choices.py:10
+msgid "Widowed"
+msgstr ""
+
+#: icu/choices.py:11
+msgid "Divorced"
+msgstr ""
+
+#: icu/filters.py:6
+msgid "Already Discharged in ICU?"
+msgstr "是否已出 ICU"
+
+#: icu/filters.py:11 icu/filters.py:32
+msgid "Yes"
+msgstr ""
+
+#: icu/filters.py:12 icu/filters.py:33
+msgid "No"
+msgstr ""
+
+#: icu/filters.py:27
+msgid "Already Discharged in Hospital?"
+msgstr "是否已出院"
+
+#: icu/managers.py:8
+msgid "The Username must be set"
+msgstr ""
+
+#: icu/managers.py:11
+msgid "The Email must be set"
+msgstr ""
+
+#: icu/managers.py:25
+msgid "Superuser must have is_staff=True."
+msgstr ""
+
+#: icu/managers.py:27
+msgid "Superuser must have is_superuser=True."
+msgstr ""
+
+#: icu/models.py:23 icu/models.py:44
+msgid "National ID"
+msgstr "身份证号"
+
+#: icu/models.py:28 icu/models.py:50
+msgid "gender"
+msgstr "性别"
+
+#: icu/models.py:29
+msgid "Contact Number"
+msgstr "电话号码"
+
+#: icu/models.py:30 icu/models.py:52
+msgid "Date of Birth"
+msgstr "生日日期"
+
+#: icu/models.py:31
+msgid "worker ID"
+msgstr "工号"
+
+#: icu/models.py:32
+msgid "position"
+msgstr "职位"
+
+#: icu/models.py:33
+msgid "Start Date"
+msgstr "入职时间"
+
+#: icu/models.py:42
+msgid "patient ID"
+msgstr "患者编号"
+
+#: icu/models.py:54 icu/models.py:160
+msgid "ethnicity"
+msgstr "民族"
+
+#: icu/models.py:56
+msgid "email"
+msgstr "邮箱"
+
+#: icu/models.py:58
+msgid "contact number"
+msgstr "电话号码"
+
+#: icu/models.py:60
+msgid "address"
+msgstr "地址"
+
+#: icu/models.py:61
+msgid "Date of Death"
+msgstr "死亡日期"
+
+#: icu/models.py:89
+msgid "age"
+msgstr "年龄"
+
+#: icu/models.py:99
+msgid "patient"
+msgstr "患者"
+
+#: icu/models.py:100
+msgid "patients"
+msgstr "患者记录"
+
+#: icu/models.py:105
+msgid "Admission ID"
+msgstr "病案号"
+
+#: icu/models.py:107
+msgid "Admission Time"
+msgstr "入院时间"
+
+#: icu/models.py:110
+msgid "Provides the date and time the patient was admitted to the hospital."
+msgstr ""
+
+#: icu/models.py:114
+msgid "Discharge Time"
+msgstr "出院时间"
+
+#: icu/models.py:118
+msgid ""
+"Provides the date and time the patient was discharged from the hospital."
+msgstr ""
+
+#: icu/models.py:122
+msgid "Death Time"
+msgstr "死亡时间"
+
+#: icu/models.py:126
+msgid ""
+"Provides the time of in-hospital death for the patient. Note that this is "
+"only present if the patient died in-hospital, and is almost always the same "
+"as the dischtime field."
+msgstr ""
+
+#: icu/models.py:132
+msgid "Admission Type"
+msgstr "入院种类"
+
+#: icu/models.py:135
+msgid "Useful for classifying the urgency of the admission."
+msgstr ""
+
+#: icu/models.py:138
+msgid "Admission Location"
+msgstr "入院位置"
+
+#: icu/models.py:142
+msgid ""
+"Provides information about the location of the patient prior to arriving at "
+"the hospital. Note that as the emergency room is technically a clinic, "
+"patients who are admitted via the emergency room usually have it as their "
+"admission location."
+msgstr ""
+
+#: icu/models.py:148
+msgid "Discharge Location"
+msgstr "出院位置"
+
+#: icu/models.py:152
+msgid ""
+"The disposition of the patient after they are discharged from the hospital."
+msgstr ""
+
+#: icu/models.py:155
+msgid "insurance"
+msgstr "保险"
+
+#: icu/models.py:156
+msgid "language"
+msgstr "母语"
+
+#: icu/models.py:158
+msgid "marital status"
+msgstr "婚姻状况"
+
+#: icu/models.py:162
+msgid "ED Registration Time"
+msgstr ""
+
+#: icu/models.py:166
+msgid ""
+"The date and time at which the patient was registered from the emergency "
+"department."
+msgstr ""
+
+#: icu/models.py:170
+msgid "ED Discharge Time"
+msgstr "ED 出院时间"
+
+#: icu/models.py:174
+msgid ""
+"The date and time at which the patient was discharged from the emergency "
+"department."
+msgstr ""
+
+#: icu/models.py:178
+msgid "Hospital Expire Flag"
+msgstr "患者是否已死亡"
+
+#: icu/models.py:181
+msgid ""
+"This is a binary flag which indicates whether the patient died within the "
+"given hospitalization. 1 indicates death in the hospital, and 0 indicates "
+"survival to hospital discharge."
+msgstr ""
+
+#: icu/models.py:186
+msgid "Discharged?"
+msgstr "是否已出院"
+
+#: icu/models.py:190
+msgid "Dead?"
+msgstr "是否已死亡"
+
+#: icu/models.py:205
+msgid "admission"
+msgstr "入院"
+
+#: icu/models.py:206
+msgid "admissions"
+msgstr "入院记录"
+
+#: icu/models.py:212
+msgid "ICU Stay ID"
+msgstr "ICU 患者编号"
+
+#: icu/models.py:214
+msgid "First Care Unit"
+msgstr ""
+
+#: icu/models.py:216
+msgid "The first ICU type in which the patient was cared for."
+msgstr ""
+
+#: icu/models.py:219
+msgid "Last Care Unit"
+msgstr ""
+
+#: icu/models.py:221
+msgid "The last ICU type in which the patient was cared for."
+msgstr ""
+
+#: icu/models.py:224
+msgid "Time In"
+msgstr ""
+
+#: icu/models.py:227
+msgid "Provides the date and time the patient was transferred into the ICU."
+msgstr ""
+
+#: icu/models.py:231
+msgid "Time Out"
+msgstr ""
+
+#: icu/models.py:235
+msgid "Provides the date and time the patient was transferred out of the ICU."
+msgstr ""
+
+#: icu/models.py:239
+msgid "ICU Discharged?"
+msgstr "是否已出 ICU"
+
+#: icu/models.py:243
+msgid "Length of Stay"
+msgstr "住 ICU 天数"
+
+#: icu/models.py:264
+msgid "ICU stay"
+msgstr ""
+
+#: icu/models.py:265
+msgid "ICU stays"
+msgstr "入 ICU 记录"
+
+#: icu/models.py:269
+msgid "item id"
+msgstr ""
+
+#: icu/models.py:271
+msgid "label"
+msgstr ""
+
+#: icu/models.py:273
+msgid "Describes the concept which is represented by this item."
+msgstr ""
+
+#: icu/models.py:276
+msgid "abbreviation"
+msgstr ""
+
+#: icu/models.py:278
+msgid "Lists a common abbreviation for the label."
+msgstr ""
+
+#: icu/models.py:281
+msgid "linksto"
+msgstr ""
+
+#: icu/models.py:284
+msgid ""
+"Provides the table name which the data links to. For example, a value of "
+"‘chartevents’ indicates that the itemid of the given row is contained in the "
+"CHARTEVENTS table. A single itemid is only used in one event table, that is, "
+"if an itemid is contained in CHARTEVENTS it will not be contained in any "
+"other event table (e.g. IOEVENTS, CHARTEVENTS, etc)."
+msgstr ""
+
+#: icu/models.py:292
+msgid "category"
+msgstr ""
+
+#: icu/models.py:295
+msgid ""
+"Provides some information of the type of data the itemid corresponds to. "
+"Examples include ‘ABG’, which indicates the measurement is sourced from an "
+"arterial blood gas, ‘IV Medication’, which indicates that the medication is "
+"administered through an intravenous line, and so on."
+msgstr ""
+
+#: icu/models.py:302
+msgid "unit name"
+msgstr ""
+
+#: icu/models.py:306
+msgid ""
+"Specifies the unit of measurement used for the itemid. This column is not "
+"always available, and this may be because the unit of measurement varies, a "
+"unit of measurement does not make sense for the given data type, or the unit "
+"of measurement is simply missing. Note that there is sometimes additional "
+"information on the unit of measurement in the associated event table, e.g. "
+"the valueuom column in CHARTEVENTS."
+msgstr ""
+
+#: icu/models.py:315
+msgid "parameter type"
+msgstr ""
+
+#: icu/models.py:318
+msgid ""
+"Describes the type of data which is recorded: a date, a number or a text "
+"field."
+msgstr ""
+
+#: icu/models.py:322
+msgid "low normal value"
+msgstr ""
+
+#: icu/models.py:324
+msgid ""
+"Stores the lowest but still considered normal value for the this measurement."
+msgstr ""
+
+#: icu/models.py:328
+msgid "high normal value"
+msgstr ""
+
+#: icu/models.py:337
+msgid "ICU event"
+msgstr ""
+
+#: icu/models.py:338
+msgid "ICU events"
+msgstr ""
+
+#: icu/models.py:346
+msgid "chart time"
+msgstr ""
+
+#: icu/models.py:348
+msgid ""
+"Records the time at which an observation was made, and is usually the "
+"closest proxy to the time the data was actually measured."
+msgstr ""
+
+#: icu/models.py:353
+msgid "store time"
+msgstr ""
+
+#: icu/models.py:355
+msgid ""
+"Records the time at which an observation was manually input or manually "
+"validated by a member of the clinical staff."
+msgstr ""
+
+#: icu/models.py:361
+msgid "value"
+msgstr ""
+
+#: icu/models.py:363
+msgid "Contains the value measured for the concept identified by the ITEMID."
+msgstr ""
+
+#: icu/models.py:367
+msgid "value (numeric)"
+msgstr ""
+
+#: icu/models.py:370
+msgid ""
+"The numeric format of the same value. If data is not numeric, this field is "
+"null."
+msgstr ""
+
+#: icu/models.py:375
+msgid "unit of measurement"
+msgstr ""
+
+#: icu/models.py:377
+msgid "The unit of measurement for the value, if appropriate."
+msgstr ""
+
+#: icu/models.py:380
+msgid "warning"
+msgstr ""
+
+#: icu/models.py:382
+msgid ""
+"Specifies if a warning for this observation was manually documented by the "
+"care provider."
+msgstr ""
+
+#: icu/models.py:388
+msgid "chart event"
+msgstr ""
+
+#: icu/models.py:389
+msgid "chart events"
+msgstr ""
+
+#: icu/validators.py:11 icu/validators.py:17
+#, python-format
+msgid "%(value)s is not a valid national ID number."
+msgstr ""
+
+#~ msgid "Still in ICU"
+#~ msgstr "还在 ICU"
+
+#~ msgid "patient id"
+#~ msgstr "患者 ID"
+
+#~ msgid "date of birth"
+#~ msgstr "生日日期"
+
+#~ msgid "national id"
+#~ msgstr "身份证号"
