@@ -1,0 +1,23 @@
+{
+  "csv": "pp-admissions.csv",
+  "model": "icu.admission",
+  "pk": "hadm_id",
+  "total": 521013,
+  "fields": {
+    "copy": {
+      "subject_id": "int:patient",
+      "admittime": "",
+      "dischtime": "",
+      "deathtime": "",
+      "admission_type": "",
+      "admission_location": "",
+      "discharge_location": "",
+      "insurance": "",
+      "language": "",
+      "marital_status": "",
+      "edregtime": "",
+      "edouttime": "",
+      "hospital_expire_flag": "int"
+    }
+  }
+}

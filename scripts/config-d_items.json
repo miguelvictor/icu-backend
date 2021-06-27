@@ -1,0 +1,18 @@
+{
+  "csv": "/Users/miguelvictor/Documents/mimic-iv/mimic-iv-1.0/icu/d_items.csv",
+  "model": "icu.icuevent",
+  "pk": "itemid",
+  "total": 3861,
+  "fields": {
+    "copy": {
+      "label": "",
+      "abbreviation": "",
+      "linksto": "",
+      "category": "",
+      "unitname": "",
+      "param_type": "",
+      "lownormalvalue": "float",
+      "highnormalvalue": "float"
+    }
+  }
+}

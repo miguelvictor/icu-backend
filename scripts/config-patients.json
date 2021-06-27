@@ -1,0 +1,14 @@
+{
+  "csv": "pp-patients.csv",
+  "model": "icu.patient",
+  "pk": "subject_id",
+  "total": 381901,
+  "fields": {
+    "copy": {
+      "national_id": "",
+      "name": "",
+      "ethnicity": "",
+      "dod": ""
+    }
+  }
+}

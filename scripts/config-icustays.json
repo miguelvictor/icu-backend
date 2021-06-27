@@ -1,0 +1,16 @@
+{
+  "csv": "pp-icustays.csv",
+  "model": "icu.icustay",
+  "pk": "stay_id",
+  "total": 76217,
+  "fields": {
+    "copy": {
+      "subject_id": "int:patient",
+      "hadm_id": "int:admission",
+      "first_careunit": "",
+      "last_careunit": "",
+      "intime": "",
+      "outtime": ""
+    }
+  }
+}
