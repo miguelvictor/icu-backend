@@ -44,3 +44,25 @@ class AdmissionDischargedFilter(admin.SimpleListFilter):
             return queryset.filter(dischtime__isnull=True)
 
         return queryset
+
+
+class PatientDeadFilter(admin.SimpleListFilter):
+    title = _("Patient Died?")
+    parameter_name = "patient_died"
+
+    def lookups(self, request, model_admin):
+        return (
+            ("Yes", _("Yes")),
+            ("No", _("No")),
+        )
+
+    def queryset(self, request, queryset):
+        value = self.value()
+
+        if value == "Yes":
+            return queryset.filter(dod__isnull=False)
+
+        if value == "No":
+            return queryset.filter(dod__isnull=True)
+
+        return queryset

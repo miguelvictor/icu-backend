@@ -3,19 +3,25 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 
 from .models import AppUser, Patient, Admission, ICUStay, ICUEvent
-from .filters import ICUStayDischargedFilter, AdmissionDischargedFilter
+from .filters import (
+    ICUStayDischargedFilter,
+    AdmissionDischargedFilter,
+    PatientDeadFilter,
+)
 
 
 class AdmissionInline(admin.StackedInline):
     model = Admission
     extra = 0
     ordering = ("admittime",)
+    classes = ("collapse",)
 
 
 class PatientAdmin(admin.ModelAdmin):
     search_fields = ["national_id", "name"]
-    list_display = ("national_id", "name", "gender", "age")
-    list_filter = ("gender",)
+    list_display = ("national_id", "name", "gender", "age", "is_dead")
+    list_filter = ("gender", PatientDeadFilter)
+    list_per_page = 20
     readonly_fields = ("gender", "date_of_birth")
     fieldsets = [
         (
@@ -37,7 +43,8 @@ class AdmissionAdmin(admin.ModelAdmin):
         "is_dead",
     )
     list_filter = ("admittime", AdmissionDischargedFilter)
-    readonly_fields = ("admittime",)
+    list_per_page = 20
+    readonly_fields = ("admittime", "patient")
     fieldsets = (
         (
             _("Patient Information"),
@@ -47,7 +54,6 @@ class AdmissionAdmin(admin.ModelAdmin):
                     "insurance",
                     "language",
                     "marital_status",
-                    "ethnicity",
                 ]
             },
         ),
@@ -77,6 +83,9 @@ class AdmissionAdmin(admin.ModelAdmin):
         ),
     )
 
+    def has_add_permission(self, request):
+        return False
+
     def get_patient_name(self, obj):
         return obj.patient.name
 
@@ -93,11 +102,15 @@ class ICUStayAdmin(admin.ModelAdmin):
         "is_already_discharged",
     )
     list_filter = ("intime", ICUStayDischargedFilter)
-    readonly_fields = ("intime",)
+    list_per_page = 20
+    readonly_fields = ("intime", "patient", "admission")
     fieldsets = (
         (None, {"fields": ["patient", "admission", "first_careunit", "last_careunit"]}),
         (_("ICU Hospitalization Time"), {"fields": ["intime", "outtime"]}),
     )
+
+    def has_add_permission(self, request):
+        return False
 
     def get_patient_name(self, obj):
         return obj.patient.name
@@ -106,8 +119,26 @@ class ICUStayAdmin(admin.ModelAdmin):
     get_patient_name.short_description = _("Patient Name")
 
 
+class ICUEventAdmin(admin.ModelAdmin):
+    search_fields = ("itemid", "label", "abbreviation", "category")
+    list_display = ("itemid", "label", "category")
+    list_filter = ("linksto",)
+    list_per_page = 20
+    readonly_fields = ("itemid",)
+    fieldsets = (
+        (
+            _("Basic Information"),
+            {"fields": ["itemid", "category", "label", "abbreviation", "unitname"]},
+        ),
+        (
+            _("More Information"),
+            {"fields": ["linksto", "param_type", "lownormalvalue", "highnormalvalue"]},
+        ),
+    )
+
+
 admin.site.register(AppUser, UserAdmin)
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(Admission, AdmissionAdmin)
 admin.site.register(ICUStay, ICUStayAdmin)
-admin.site.register(ICUEvent)
+admin.site.register(ICUEvent, ICUEventAdmin)

@@ -67,6 +67,12 @@ ETHNICITY_CHOICES = (
     ("门巴族", "门巴族"),
     ("珞巴族", "珞巴族"),
     ("基诺族", "基诺族"),
+    ("white", _("White")),
+    ("black/african american", _("Black/African American")),
+    ("asian", _("Asian")),
+    ("hispanic/latino", _("Hispanic/Latino")),
+    ("american indian/alaska native", _("American Indian/Alaska Native")),
+    ("unknown", _("Unknown")),
 )
 POSITION_CHOICES = (
     ("nurse", "医护"),
@@ -74,13 +80,13 @@ POSITION_CHOICES = (
     ("dean", "院长"),
 )
 ADMISSION_TYPE_CHOICES = (
-    ("ambulatory-observation", "AMBULATORY OBSERVATION"),
-    ("direct-emergency", "DIRECT EMER."),
-    ("direct-observation", "DIRECT OBSERVATION"),
-    ("elective", "ELECTIVE"),
-    ("eu-observation", "EU OBSERVATION"),
-    ("ew-emer", "EW EMER."),
-    ("observation-admit", "OBSERVATION ADMIT"),
-    ("surgical-same-day-admission", "SURGICAL SAME DAY ADMISSION"),
-    ("urgent", "URGENT"),
+    ("ambulatory observation", _("Ambulatory Observation")),
+    ("direct emer.", _("Direct Emergency")),
+    ("direct observation", _("Direct Observation")),
+    ("elective", _("Elective")),
+    ("eu observation", _("EU Observation")),
+    ("ew emer.", _("EW Emergency")),
+    ("observation admit", _("Observation Admit")),
+    ("surgical same day admission", _("Surgical Same Day Admission")),
+    ("urgent", _("Urgent")),
 )

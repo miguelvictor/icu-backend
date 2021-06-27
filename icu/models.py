@@ -64,17 +64,25 @@ class Patient(models.Model):
         extra = (now.month, now.day) < (dob.month, dob.day)
         return now.year - dob.year - extra
 
+    @admin.display(ordering="dod", description=_("Dead?"), boolean=True)
+    def is_dead(self):
+        return self.dod != None
+
     def __str__(self):
-        return f"#{self.subject_id}: {self.name}"
+        return f"【{self.subject_id}】{self.name}"
 
     class Meta:
+        indexes = [
+            models.Index(fields=["national_id"]),
+            models.Index(fields=["name"]),
+        ]
         verbose_name = _("patient")
         verbose_name_plural = _("patients")
 
 
 class Admission(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     hadm_id = models.BigAutoField(_("Admission ID"), primary_key=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     admittime = models.DateTimeField(
         _("Admission Time"),
         auto_now_add=True,
@@ -109,6 +117,7 @@ class Admission(models.Model):
     admission_location = models.CharField(
         _("Admission Location"),
         max_length=60,
+        null=True,
         blank=True,
         help_text=_(
             "Provides information about the location of the patient prior to arriving at the hospital. "
@@ -119,6 +128,7 @@ class Admission(models.Model):
     discharge_location = models.CharField(
         _("Discharge Location"),
         max_length=60,
+        null=True,
         blank=True,
         help_text=_(
             "The disposition of the patient after they are discharged from the hospital."
@@ -127,9 +137,12 @@ class Admission(models.Model):
     insurance = models.CharField(_("insurance"), max_length=255, blank=True)
     language = models.CharField(_("language"), max_length=50, blank=True)
     marital_status = models.CharField(
-        _("marital status"), max_length=50, choices=MARITAL_STATUS_CHOICES
+        _("marital status"),
+        max_length=50,
+        choices=MARITAL_STATUS_CHOICES,
+        null=True,
+        blank=True,
     )
-    ethnicity = models.CharField(_("ethnicity"), max_length=80, blank=True)
     edregtime = models.DateTimeField(
         _("ED Registration Time"),
         null=True,
@@ -155,15 +168,16 @@ class Admission(models.Model):
         ),
     )
 
-    @admin.display(ordering="outtime", description=_("Discharged?"))
+    @admin.display(ordering="dischtime", description=_("Discharged?"), boolean=True)
     def is_already_discharged(self):
         return self.dischtime != None
 
-    @admin.display(ordering="deathtime", description=_("Dead?"))
+    @admin.display(ordering="deathtime", description=_("Dead?"), boolean=True)
     def is_dead(self):
         return self.deathtime != None
 
     def __str__(self):
+        patient_id = self.patient.subject_id
         name = self.patient.name
         admission_order = (
             self.patient.admission_set.order_by("admittime")
@@ -171,9 +185,10 @@ class Admission(models.Model):
             .count()
         )
 
-        return f"{name}的第 {admission_order} 次入院"
+        return f"【{patient_id}】{name}的第 {admission_order} 次入院"
 
     class Meta:
+        indexes = [models.Index(fields=["admittime"])]
         verbose_name = _("admission")
         verbose_name_plural = _("admissions")
 
@@ -208,7 +223,7 @@ class ICUStay(models.Model):
         ),
     )
 
-    @admin.display(ordering="outtime", description=_("ICU Discharged?"))
+    @admin.display(ordering="outtime", description=_("ICU Discharged?"), boolean=True)
     def is_already_discharged(self):
         return self.outtime != None
 
@@ -218,6 +233,7 @@ class ICUStay(models.Model):
         return delta.days
 
     def __str__(self):
+        patient_id = self.patient.subject_id
         name = self.patient.name
         admission_order = (
             self.patient.admission_set.order_by("admittime")
@@ -230,7 +246,7 @@ class ICUStay(models.Model):
             .count()
         )
 
-        return f"{name}的第 {admission_order} 次入院的第 {icu_stay_order} 个 ICU stay"
+        return f"【{patient_id}】{name}的第 {admission_order} 次入院的第 {icu_stay_order} 个 ICU stay"
 
     class Meta:
         verbose_name = _("ICU stay")
@@ -238,7 +254,7 @@ class ICUStay(models.Model):
 
 
 class ICUEvent(models.Model):
-    itemid = models.AutoField(_("item id"), primary_key=True)
+    itemid = models.AutoField(_("Item ID"), primary_key=True)
     label = models.CharField(
         _("label"),
         max_length=200,
@@ -250,7 +266,7 @@ class ICUEvent(models.Model):
         help_text=_("Lists a common abbreviation for the label."),
     )
     linksto = models.CharField(
-        _("linksto"),
+        _("Links To"),
         max_length=50,
         help_text=_(
             "Provides the table name which the data links to. "
@@ -271,8 +287,9 @@ class ICUEvent(models.Model):
         ),
     )
     unitname = models.CharField(
-        _("unit name"),
+        _("Unit Name"),
         max_length=100,
+        null=True,
         blank=True,
         help_text=_(
             "Specifies the unit of measurement used for the itemid. "
@@ -284,20 +301,24 @@ class ICUEvent(models.Model):
         ),
     )
     param_type = models.CharField(
-        _("parameter type"),
+        _("Parameter Type"),
         max_length=30,
         help_text=_(
             "Describes the type of data which is recorded: a date, a number or a text field."
         ),
     )
     lownormalvalue = models.FloatField(
-        _("low normal value"),
+        _("Low Normal Value"),
+        null=True,
+        blank=True,
         help_text=_(
             "Stores the lowest but still considered normal value for the this measurement."
         ),
     )
     highnormalvalue = models.FloatField(
-        _("high normal value"),
+        _("High Normal Value"),
+        null=True,
+        blank=True,
         help_text=(
             "Stores the highest but still considered normal value for the this measurement. "
             "Note that a reference range encompasses the expected value of a measurement: "
@@ -305,9 +326,12 @@ class ICUEvent(models.Model):
         ),
     )
 
+    def __str__(self):
+        return f"#{self.itemid}【{self.category}】{self.label }"
+
     class Meta:
-        verbose_name = _("ICU event")
-        verbose_name_plural = _("ICU events")
+        verbose_name = _("ICU Event")
+        verbose_name_plural = _("ICU Events")
 
 
 class ChartEvent(models.Model):
