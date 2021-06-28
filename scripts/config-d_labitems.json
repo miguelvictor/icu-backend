@@ -1,0 +1,14 @@
+{
+  "csv": "/Users/miguelvictor/Documents/mimic-iv/mimic-iv-1.0/hosp/d_labitems.csv",
+  "model": "icu.labitem",
+  "pk": "itemid",
+  "total": 1630,
+  "fields": {
+    "copy": {
+      "label": "str",
+      "fluid": "str",
+      "category": "str",
+      "loinc_code": "str"
+    }
+  }
+}

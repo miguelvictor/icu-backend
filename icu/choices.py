@@ -90,3 +90,19 @@ ADMISSION_TYPE_CHOICES = (
     ("surgical same day admission", _("Surgical Same Day Admission")),
     ("urgent", _("Urgent")),
 )
+DITEMS_LINKSTO_CHOICES = (
+    ("datetimeevents", "datetimeevents"),
+    ("chartevents", "chartevents"),
+    ("inputevents", "inputevents"),
+    ("procedureevents", "procedureevents"),
+    ("outputevents", "outputevents"),
+)
+DITEMS_PARAM_TYPE_CHOICES = (
+    ("Date and time", _("Date and time")),
+    ("Numeric", _("Numeric")),
+    ("Text", _("Text")),
+    ("Solution", _("Solution")),
+    ("Processes", _("Processes")),
+    ("Checkbox", _("Checkbox")),
+    ("Numeric with tag", _("Numeric with tag")),
+)

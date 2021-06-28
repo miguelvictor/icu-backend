@@ -1,4 +1,9 @@
 .DS_Store
 __pycache__
+
 *.mo
 *.sqlite3
+*.ipynb
+icu/fixtures/*.jsonl
+scripts/*.csv
+scripts/*.jsonl

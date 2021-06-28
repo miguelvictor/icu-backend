@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 
-from .models import AppUser, Patient, Admission, ICUStay, ICUEvent
+from .models import AppUser, LabEvent, LabItem, Patient, Admission, ICUStay, ICUEvent
 from .filters import (
     ICUStayDischargedFilter,
     AdmissionDischargedFilter,
@@ -18,11 +18,6 @@ class AdmissionInline(admin.StackedInline):
 
 
 class PatientAdmin(admin.ModelAdmin):
-    search_fields = ["national_id", "name"]
-    list_display = ("national_id", "name", "gender", "age", "is_dead")
-    list_filter = ("gender", PatientDeadFilter)
-    list_per_page = 20
-    readonly_fields = ("gender", "date_of_birth")
     fieldsets = [
         (
             _("Basic Information"),
@@ -32,19 +27,14 @@ class PatientAdmin(admin.ModelAdmin):
         (_("Other Information"), {"fields": ["dod"]}),
     ]
     inlines = [AdmissionInline]
+    list_display = ("national_id", "name", "gender", "age", "is_dead")
+    list_filter = ("gender", PatientDeadFilter)
+    list_per_page = 20
+    readonly_fields = ("gender", "date_of_birth")
+    search_fields = ["subject_id", "national_id", "name"]
 
 
 class AdmissionAdmin(admin.ModelAdmin):
-    list_display = (
-        "hadm_id",
-        "get_patient_name",
-        "admittime",
-        "is_already_discharged",
-        "is_dead",
-    )
-    list_filter = ("admittime", AdmissionDischargedFilter)
-    list_per_page = 20
-    readonly_fields = ("admittime", "patient")
     fieldsets = (
         (
             _("Patient Information"),
@@ -82,9 +72,18 @@ class AdmissionAdmin(admin.ModelAdmin):
             {"fields": ["edregtime", "edouttime", "hospital_expire_flag"]},
         ),
     )
-
-    def has_add_permission(self, request):
-        return False
+    list_display = (
+        "hadm_id",
+        "get_patient_name",
+        "admittime",
+        "is_already_discharged",
+        "is_dead",
+    )
+    list_filter = ("admittime", AdmissionDischargedFilter)
+    list_per_page = 20
+    raw_id_fields = ("patient",)
+    readonly_fields = ("admittime",)
+    search_fields = ("hadm_id", "patient__national_id", "patient__name")
 
     def get_patient_name(self, obj):
         return obj.patient.name
@@ -94,6 +93,10 @@ class AdmissionAdmin(admin.ModelAdmin):
 
 
 class ICUStayAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {"fields": ["patient", "admission", "first_careunit", "last_careunit"]}),
+        (_("ICU Hospitalization Time"), {"fields": ["intime", "outtime"]}),
+    )
     list_display = (
         "stay_id",
         "get_patient_name",
@@ -103,14 +106,14 @@ class ICUStayAdmin(admin.ModelAdmin):
     )
     list_filter = ("intime", ICUStayDischargedFilter)
     list_per_page = 20
-    readonly_fields = ("intime", "patient", "admission")
-    fieldsets = (
-        (None, {"fields": ["patient", "admission", "first_careunit", "last_careunit"]}),
-        (_("ICU Hospitalization Time"), {"fields": ["intime", "outtime"]}),
+    readonly_fields = ("intime",)
+    raw_id_fields = ("patient", "admission")
+    search_fields = (
+        "stay_id",
+        "patient__national_id",
+        "patient__name",
+        "admission__hadm_id",
     )
-
-    def has_add_permission(self, request):
-        return False
 
     def get_patient_name(self, obj):
         return obj.patient.name
@@ -137,8 +140,28 @@ class ICUEventAdmin(admin.ModelAdmin):
     )
 
 
+class LabItemAdmin(admin.ModelAdmin):
+    search_fields = ("itemid", "label", "fluid", "category", "loinc_code")
+    list_display = ("itemid", "label", "category")
+    list_filter = ("category",)
+    list_per_page = 20
+    readonly_fields = ("itemid",)
+    fields = ("itemid", "label", "category", "fluid", "loinc_code")
+
+
+class LabEventAdmin(admin.ModelAdmin):
+    list_per_page = 20
+
+
+# Core Module
 admin.site.register(AppUser, UserAdmin)
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(Admission, AdmissionAdmin)
+
+# ICU Module
 admin.site.register(ICUStay, ICUStayAdmin)
 admin.site.register(ICUEvent, ICUEventAdmin)
+
+# Hospital Module
+admin.site.register(LabItem, LabItemAdmin)
+admin.site.register(LabEvent, LabEventAdmin)

@@ -7,6 +7,8 @@ from uuid import uuid4
 
 from .choices import (
     ADMISSION_TYPE_CHOICES,
+    DITEMS_LINKSTO_CHOICES,
+    DITEMS_PARAM_TYPE_CHOICES,
     ETHNICITY_CHOICES,
     GENDER_CHOICES,
     MARITAL_STATUS_CHOICES,
@@ -268,6 +270,7 @@ class ICUEvent(models.Model):
     linksto = models.CharField(
         _("Links To"),
         max_length=50,
+        choices=DITEMS_LINKSTO_CHOICES,
         help_text=_(
             "Provides the table name which the data links to. "
             "For example, a value of ‘chartevents’ indicates that the itemid "
@@ -303,6 +306,7 @@ class ICUEvent(models.Model):
     param_type = models.CharField(
         _("Parameter Type"),
         max_length=30,
+        choices=DITEMS_PARAM_TYPE_CHOICES,
         help_text=_(
             "Describes the type of data which is recorded: a date, a number or a text field."
         ),
@@ -383,3 +387,159 @@ class ChartEvent(models.Model):
     class Meta:
         verbose_name = _("chart event")
         verbose_name_plural = _("chart events")
+
+
+class LabItem(models.Model):
+    itemid = models.AutoField(
+        _("Item ID"),
+        primary_key=True,
+        help_text=_(
+            "A unique identifier for a laboratory concept. "
+            "itemid is unique to each row, and can be used "
+            "to identify data in LABEVENTS associated with a specific concept."
+        ),
+    )
+    label = models.CharField(
+        _("Label"),
+        max_length=50,
+        help_text=_("Describes the concept which is represented by the itemid."),
+    )
+    fluid = models.CharField(
+        _("Fluid"),
+        max_length=50,
+        help_text=_(
+            "Describes the substance on which the measurement was made. "
+            "For example, chemistry measurements are frequently performed on blood, "
+            "which is listed in this column as ‘BLOOD’. Many of these measurements "
+            "are also acquirable on other fluids, such as urine, and this column "
+            "differentiates these distinct concepts."
+        ),
+    )
+    category = models.CharField(
+        _("category"),
+        max_length=50,
+        help_text=_(
+            "Provides higher level information as to the type of measurement. "
+            "For example, a category of ‘ABG’ indicates that the measurement is an arterial blood gas."
+        ),
+    )
+    loinc_code = models.CharField(
+        _("LOINC Code"),
+        max_length=50,
+        blank=True,
+        help_text=_(
+            "Contains the LOINC code associated with the given itemid. "
+            "LOINC is an ontology which originally specified laboratory measurements "
+            "but has since expanded to cover a wide range of clinically relevant concepts. "
+            "LOINC openly provide a table which contains a large amount of detail about each LOINC code. "
+            "This table is freely available online."
+        ),
+    )
+
+    def __str__(self):
+        return f"【{self.itemid}】{self.label}"
+
+    class Meta:
+        verbose_name = _("Laboratory Item")
+        verbose_name_plural = _("Laboratory Items")
+
+
+class LabEvent(models.Model):
+    labevent_id = models.AutoField(_("Lab Event ID"), primary_key=True)
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
+    admission = models.ForeignKey(Admission, on_delete=models.CASCADE)
+    specimen_id = models.IntegerField(
+        _("Specimen ID"),
+        help_text=_(
+            "Uniquely denoted the specimen from which the lab measurement was made. "
+            "Most lab measurements are made on patient derived samples (specimens) such as blood, "
+            "urine, and so on. Often multiple measurements are made on the same sample. "
+            "The specimen_id will group measurements made on the same sample, "
+            "e.g. blood gas measurements made on the same sample of blood."
+        ),
+    )
+    item_id = models.ForeignKey(LabItem, on_delete=models.CASCADE)
+    charttime = models.DateTimeField(
+        _("Chart Time"),
+        help_text=_(
+            "The time at which the laboratory measurement was charted. "
+            "This is usually the time at which the specimen was acquired, "
+            "and is usually significantly earlier than the time at which the measurement is available."
+        ),
+    )
+    storetime = models.DateTimeField(
+        _("Store Time"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "The time at which the measurement was made available in the laboratory system. "
+            "This is when the information would have been available to care providers."
+        ),
+    )
+    value = models.CharField(
+        _("value"),
+        max_length=200,
+        help_text=_("The result of the laboratory measurement."),
+    )
+    valuenum = models.FloatField(
+        _("Value (Numeric)"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "If value is numeric, this contains the value cast as a numeric data type."
+        ),
+    )
+    valueuom = models.CharField(
+        _("Unit of Measurement"),
+        max_length=20,
+        blank=True,
+        help_text=_("The unit of measurement for the laboratory concept."),
+    )
+    ref_range_lower = models.FloatField(
+        _("Ref Range Lower"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "Lower reference range indicating the normal range for the laboratory measurements. Values outside the reference ranges are considered abnormal."
+        ),
+    )
+    ref_range_upper = models.FloatField(
+        _("Ref Range Upper"),
+        null=True,
+        blank=True,
+        help_text=_(
+            "Upper reference range indicating the normal range for the laboratory measurements. Values outside the reference ranges are considered abnormal."
+        ),
+    )
+    flag = models.CharField(
+        _("Flag"),
+        max_length=10,
+        blank=True,
+        help_text=_(
+            "A brief string mainly used to indicate if the laboratory measurement is abnormal."
+        ),
+    )
+    priority = models.CharField(
+        _("Priority"),
+        max_length=7,
+        blank=True,
+        help_text=_(
+            "The priority of the laboratory measurement: either routine or stat (urgent)."
+        ),
+    )
+    comments = models.TextField(
+        _("Comments"),
+        blank=True,
+        help_text=_(
+            "Deidentified free-text comments associated with the laboratory measurement. "
+            "Usually these provide information about the sample, whether any notifications "
+            "were made to care providers regarding the results, considerations for interpretation, "
+            "or in some cases the comments contain the result of the laboratory itself. "
+            "Comments which have been fully deidentified (i.e. no information content retained) "
+            "are present as three underscores: ___. A NULL comment indicates no comment was made for the row."
+        ),
+    )
+
+    class Meta:
+        verbose_name = _("Laboratory Event")
+        verbose_name_plural = _("Laboratory Events")
