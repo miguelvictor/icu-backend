@@ -458,7 +458,7 @@ class LabEvent(models.Model):
             "e.g. blood gas measurements made on the same sample of blood."
         ),
     )
-    item_id = models.ForeignKey(LabItem, on_delete=models.CASCADE)
+    lab_item = models.ForeignKey(LabItem, on_delete=models.CASCADE)
     charttime = models.DateTimeField(
         _("Chart Time"),
         help_text=_(

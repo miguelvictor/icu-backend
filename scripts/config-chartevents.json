@@ -1,0 +1,20 @@
+{
+  "csv": "pp-chartevents.csv",
+  "model": "icu.chartevent",
+  "pk": "labevent_id",
+  "total": 319914238,
+  "fields": {
+    "copy": {
+      "subject_id": "int:patient",
+      "hadm_id": "int:admission",
+      "stay_id": "int:icustay",
+      "charttime": "",
+      "storetime": "",
+      "item_id": "str:icuevent",
+      "value": "str",
+      "valuenum": "float",
+      "valueuom": "str",
+      "warning": "int"
+    }
+  }
+}

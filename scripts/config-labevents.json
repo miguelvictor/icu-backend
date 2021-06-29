@@ -1,0 +1,24 @@
+{
+  "csv": "pp-labevents.csv",
+  "model": "icu.labevent",
+  "pk": "labevent_id",
+  "total": 118018809,
+  "fields": {
+    "copy": {
+      "subject_id": "int:patient",
+      "hadm_id": "int:admission",
+      "specimen_id": "int",
+      "item_id": "int:lab_item",
+      "charttime": "",
+      "storetime": "",
+      "value": "str",
+      "valuenum": "float",
+      "valueuom": "str",
+      "ref_range_lower": "float",
+      "ref_range_upper": "float",
+      "flag": "str",
+      "priority": "str",
+      "comments": "str"
+    }
+  }
+}
