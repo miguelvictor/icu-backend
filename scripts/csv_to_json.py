@@ -40,9 +40,12 @@ def main(args):
             # initialize fixture data
             data = {
                 "model": config["model"],
-                "pk": row_as_dict[config["pk"]],
                 "fields": {},
             }
+
+            # add optional primary key if defined
+            if "pk" in config:
+                data["pk"] = row_as_dict[config["pk"]]
 
             # copy required fields
             for field_name, meta in config["fields"]["copy"].items():
@@ -62,7 +65,7 @@ def main(args):
                 # perform type conversion (if necessary)
                 if value is not None:
                     if field_type == "int":
-                        value = int(value)
+                        value = int(float(value))
                     elif field_type == "float":
                         value = float(value)
 
