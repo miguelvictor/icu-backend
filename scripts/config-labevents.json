@@ -8,7 +8,7 @@
       "subject_id": "int:patient",
       "hadm_id": "int:admission",
       "specimen_id": "int",
-      "item_id": "int:lab_item",
+      "itemid": "int:lab_item",
       "charttime": "",
       "storetime": "",
       "value": "str",

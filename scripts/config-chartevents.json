@@ -10,7 +10,7 @@
       "stay_id": "int:icustay",
       "charttime": "",
       "storetime": "",
-      "item_id": "str:icuevent",
+      "itemid": "str:icuevent",
       "value": "str",
       "valuenum": "float",
       "valueuom": "str",
