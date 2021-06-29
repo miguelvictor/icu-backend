@@ -6,7 +6,7 @@ from django.utils.timezone import get_current_timezone
 from django.utils.translation import gettext_lazy as _
 from id_validator import validator
 
-from .models import Admission, ICUStay, Patient
+from .models import Admission, ChartEvent, ICUStay, LabEvent, Patient
 
 
 @receiver(pre_save, sender=Patient)
@@ -70,3 +70,21 @@ def icustay_pre_save_handler(sender, instance, **kwargs):
         instance.intime = instance.intime.replace(tzinfo=get_current_timezone())
     if instance.outtime is not None and instance.outtime.tzinfo is None:
         instance.outtime = instance.outtime.replace(tzinfo=get_current_timezone())
+
+
+@receiver(pre_save, sender=LabEvent)
+def labevent_pre_save_handler(sender, instance, **kwargs):
+    # add default timezone to unaware date/time fields
+    if instance.charttime is not None and instance.charttime.tzinfo is None:
+        instance.charttime = instance.charttime.replace(tzinfo=get_current_timezone())
+    if instance.storetime is not None and instance.storetime.tzinfo is None:
+        instance.storetime = instance.storetime.replace(tzinfo=get_current_timezone())
+
+
+@receiver(pre_save, sender=ChartEvent)
+def chartevent_pre_save_handler(sender, instance, **kwargs):
+    # add default timezone to unaware date/time fields
+    if instance.charttime is not None and instance.charttime.tzinfo is None:
+        instance.charttime = instance.charttime.replace(tzinfo=get_current_timezone())
+    if instance.storetime is not None and instance.storetime.tzinfo is None:
+        instance.storetime = instance.storetime.replace(tzinfo=get_current_timezone())

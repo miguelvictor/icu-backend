@@ -447,7 +447,12 @@ class LabItem(models.Model):
 class LabEvent(models.Model):
     labevent_id = models.AutoField(_("Lab Event ID"), primary_key=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
-    admission = models.ForeignKey(Admission, on_delete=models.CASCADE)
+    admission = models.ForeignKey(
+        Admission,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+    )
     specimen_id = models.IntegerField(
         _("Specimen ID"),
         help_text=_(
