@@ -1,7 +1,6 @@
 {
   "csv": "pp-chartevents.csv",
   "model": "icu.chartevent",
-  "pk": "labevent_id",
   "total": 319914238,
   "fields": {
     "copy": {
