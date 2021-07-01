@@ -6,14 +6,15 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-from .views import PatientsViewSet
+from .views import DoctorsViewSet, PatientsViewSet
 
 router = DefaultRouter()
 router.register(r"patients", PatientsViewSet)
+router.register(r"doctors", DoctorsViewSet)
 
 
 urlpatterns = [
-    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("jwt-token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("jwt-token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("", include(router.urls)),
 ]

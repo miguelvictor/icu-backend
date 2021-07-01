@@ -6,7 +6,22 @@ from django.utils.timezone import get_current_timezone
 from django.utils.translation import gettext_lazy as _
 from id_validator import validator
 
-from .models import Admission, ChartEvent, ICUStay, LabEvent, Patient
+from .models import Admission, AppUser, ChartEvent, ICUStay, LabEvent, Patient
+
+
+@receiver(pre_save, sender=AppUser)
+def doctor_pre_save_handler(sender, instance, **kwargs):
+    # get info from the patient's national ID
+    info = validator.get_info(instance.national_id)
+    if info is False:
+        raise ValidationError(
+            _("%(value)s is not a valid national ID number."),
+            params={"value": instance.national_id},
+        )
+
+    # patient's gender and date of birth can be retrieved from national ID
+    instance.gender = "M" if info["sex"] == 1 else "F"
+    instance.date_of_birth = datetime.strptime(info["birthday_code"], r"%Y-%m-%d")
 
 
 @receiver(pre_save, sender=Patient)

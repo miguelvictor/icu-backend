@@ -10,6 +10,46 @@ from .filters import (
 )
 
 
+class AppUserAdmin(UserAdmin):
+    readonly_fields = ("id", "worker_id", "gender", "date_of_birth", "start_date")
+    fieldsets = (
+        (None, {"fields": ("id", "worker_id", "username", "password")}),
+        (
+            _("Personal info"),
+            {
+                "fields": (
+                    "national_id",
+                    "first_name",
+                    "last_name",
+                    "gender",
+                    "date_of_birth",
+                )
+            },
+        ),
+        (
+            _("Employment Information"),
+            {"fields": ("position", "start_date")},
+        ),
+        (
+            _("Contact Information"),
+            {"fields": ("contact_no", "email")},
+        ),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
+
+
 class AdmissionInline(admin.StackedInline):
     model = Admission
     extra = 0
@@ -154,7 +194,7 @@ class LabEventAdmin(admin.ModelAdmin):
 
 
 # Core Module
-admin.site.register(AppUser, UserAdmin)
+admin.site.register(AppUser, AppUserAdmin)
 admin.site.register(Patient, PatientAdmin)
 admin.site.register(Admission, AdmissionAdmin)
 

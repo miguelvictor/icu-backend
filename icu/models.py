@@ -25,10 +25,17 @@ class AppUser(AbstractUser):
         unique=True,
         validators=[validate_national_id],
     )
-    gender = models.CharField(_("gender"), max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(
+        _("gender"), max_length=1, editable=False, choices=GENDER_CHOICES
+    )
     contact_no = models.CharField(_("Contact Number"), max_length=150, blank=True)
-    date_of_birth = models.DateField(_("Date of Birth"), null=True, blank=True)
-    worker_id = models.UUIDField(_("worker ID"), unique=True, default=uuid4)
+    date_of_birth = models.DateField(_("Date of Birth"), editable=False, null=True)
+    worker_id = models.UUIDField(
+        _("worker ID"),
+        unique=True,
+        editable=False,
+        default=uuid4,
+    )
     position = models.CharField(_("position"), max_length=50, choices=POSITION_CHOICES)
     start_date = models.DateField(_("Start Date"), auto_now_add=True)
 
