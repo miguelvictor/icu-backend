@@ -18,6 +18,12 @@ def parse_args():
         required=True,
         help="The root directory of the MIMIC-IV dataset.",
     )
+    parser.add_argument(
+        "--chunk_size",
+        type=int,
+        default=500_000,
+        help="The chunk size to be used for processing large CSV files like labevents and chartevents.",
+    )
 
     return parser.parse_args()
 
@@ -214,12 +220,13 @@ def preprocess_icustays(root: Path):
         remove_patients("pp-admissions.csv", tbd_patient_subject_ids)
 
 
-def preprocess_labevents(root: Path):
+def preprocess_labevents(root: Path, chunk_size: int = 500_000):
     # load preprocessed patients csv and get mappings
-    df = pd.read_csv("pp-patients.csv")
-    _anchor = dict(zip(df["subject_id"], df["anchor_year"]))
-    _chosen = dict(zip(df["subject_id"], df["chosen_anchor_year"]))
-    _patients = df["subject_id"]
+    # df = pd.read_csv("pp-patients.csv")
+    # _anchor = dict(zip(df["subject_id"], df["anchor_year"]))
+    # _chosen = dict(zip(df["subject_id"], df["chosen_anchor_year"]))
+    # _patients = df["subject_id"]
+    patient_ids = pd.read_pickle("patient_ids.pkl")
 
     # load admissions csv and delete rows with subject_id
     # that does not exist in pp-patients
@@ -227,82 +234,83 @@ def preprocess_labevents(root: Path):
         pd.read_csv(
             root / "hosp" / "labevents.csv",
             iterator=True,
-            chunksize=200_000,
+            chunksize=chunk_size,
         )
     ):
-        df = df[df["subject_id"].isin(_patients)]
+        df = df[df["subject_id"].isin(patient_ids)]
 
         # convert mappings to auxiliary series
-        _df_anchor = df["subject_id"].apply(lambda x: _anchor[x])
-        _df_chosen = df["subject_id"].apply(lambda x: _chosen[x])
+        # _df_anchor = df["subject_id"].apply(lambda x: _anchor[x])
+        # _df_chosen = df["subject_id"].apply(lambda x: _chosen[x])
 
         # adjust `charttime` and `storetime` times
-        df["charttime"] = adjust_year(df["charttime"], _df_anchor, _df_chosen)
-        df["storetime"] = adjust_year(df["storetime"], _df_anchor, _df_chosen)
-        is_invalid = pd.to_datetime(df["charttime"], errors="coerce").isna() | (
-            ~df["storetime"].isna()
-            & pd.to_datetime(df["storetime"], errors="coerce").isna()
-        )
-        tbd_patient_subject_ids = df.loc[is_invalid, "subject_id"]
-        df = df[~df["subject_id"].isin(tbd_patient_subject_ids)]
+        # df["charttime"] = adjust_year(df["charttime"], _df_anchor, _df_chosen)
+        # df["storetime"] = adjust_year(df["storetime"], _df_anchor, _df_chosen)
+        # is_invalid = pd.to_datetime(df["charttime"], errors="coerce").isna() | (
+        #     ~df["storetime"].isna()
+        #     & pd.to_datetime(df["storetime"], errors="coerce").isna()
+        # )
+        # tbd_patient_subject_ids = df.loc[is_invalid, "subject_id"]
+        # df = df[~df["subject_id"].isin(tbd_patient_subject_ids)]
 
         # output to csv
         if i == 0:
-            df.to_csv("pp-labevents.csv", index=False)
+            df.to_csv("pp-labevents-new.csv", index=False)
         else:
-            df.to_csv("pp-labevents.csv", index=False, header=None, mode="a")
+            df.to_csv("pp-labevents-new.csv", index=False, header=None, mode="a")
 
-        if not tbd_patient_subject_ids.empty:
-            remove_patients("pp-patients.csv", tbd_patient_subject_ids)
-            remove_patients("pp-admissions.csv", tbd_patient_subject_ids)
-            remove_patients("pp-icustays.csv", tbd_patient_subject_ids)
+        # if not tbd_patient_subject_ids.empty:
+        #     remove_patients("pp-patients.csv", tbd_patient_subject_ids)
+        #     remove_patients("pp-admissions.csv", tbd_patient_subject_ids)
+        #     remove_patients("pp-icustays.csv", tbd_patient_subject_ids)
 
 
-def preprocess_chartevents(root: Path):
+def preprocess_chartevents(root: Path, chunk_size: int = 500_000):
     # load preprocessed patients csv and get mappings
-    df = pd.read_csv("pp-patients.csv")
-    _anchor = dict(zip(df["subject_id"], df["anchor_year"]))
-    _chosen = dict(zip(df["subject_id"], df["chosen_anchor_year"]))
-    _patients = df["subject_id"]
+    # df = pd.read_csv("pp-patients.csv")
+    # _anchor = dict(zip(df["subject_id"], df["anchor_year"]))
+    # _chosen = dict(zip(df["subject_id"], df["chosen_anchor_year"]))
+    # _patients = df["subject_id"]
+    patient_ids = pd.read_pickle("patient_ids.pkl")
 
     # load admissions csv and delete rows with subject_id
     # that does not exist in pp-patients
     for i, df in enumerate(
         pd.read_csv(
-            root / "icu" / "chartevents.csv",
+            "pp-chartevents.csv",
             iterator=True,
-            chunksize=200_000,
+            chunksize=chunk_size,
         )
     ):
-        df = df[df["subject_id"].isin(_patients)]
+        df = df[df["subject_id"].isin(patient_ids)]
 
         # convert mappings to auxiliary series
-        _df_anchor = df["subject_id"].apply(lambda x: _anchor[x])
-        _df_chosen = df["subject_id"].apply(lambda x: _chosen[x])
+        # _df_anchor = df["subject_id"].apply(lambda x: _anchor[x])
+        # _df_chosen = df["subject_id"].apply(lambda x: _chosen[x])
 
         # adjust `charttime` and `storetime` times
-        df["charttime"] = adjust_year(df["charttime"], _df_anchor, _df_chosen)
-        df["storetime"] = adjust_year(df["storetime"], _df_anchor, _df_chosen)
-        is_invalid = (
-            ~df["charttime"].isna()
-            & pd.to_datetime(df["charttime"], errors="coerce").isna()
-        ) | (
-            ~df["storetime"].isna()
-            & pd.to_datetime(df["storetime"], errors="coerce").isna()
-        )
-        tbd_patient_subject_ids = df.loc[is_invalid, "subject_id"]
-        df = df[~df["subject_id"].isin(tbd_patient_subject_ids)]
+        # df["charttime"] = adjust_year(df["charttime"], _df_anchor, _df_chosen)
+        # df["storetime"] = adjust_year(df["storetime"], _df_anchor, _df_chosen)
+        # is_invalid = (
+        #     ~df["charttime"].isna()
+        #     & pd.to_datetime(df["charttime"], errors="coerce").isna()
+        # ) | (
+        #     ~df["storetime"].isna()
+        #     & pd.to_datetime(df["storetime"], errors="coerce").isna()
+        # )
+        # tbd_patient_subject_ids = df.loc[is_invalid, "subject_id"]
+        # df = df[~df["subject_id"].isin(tbd_patient_subject_ids)]
 
         # output to csv
         if i == 0:
-            df.to_csv("pp-chartevents.csv", index=False)
+            df.to_csv("pp-chartevents-new.csv", index=False)
         else:
-            df.to_csv("pp-chartevents.csv", index=False, header=None, mode="a")
+            df.to_csv("pp-chartevents-new.csv", index=False, header=None, mode="a")
 
-        if not tbd_patient_subject_ids.empty:
-            remove_patients("pp-patients.csv", tbd_patient_subject_ids)
-            remove_patients("pp-admissions.csv", tbd_patient_subject_ids)
-            remove_patients("pp-icustays.csv", tbd_patient_subject_ids)
+        # if not tbd_patient_subject_ids.empty:
+        #     remove_patients("pp-patients.csv", tbd_patient_subject_ids)
+        #     remove_patients("pp-admissions.csv", tbd_patient_subject_ids)
+        #     remove_patients("pp-icustays.csv", tbd_patient_subject_ids)
 
 
 def main(args):
@@ -312,16 +320,16 @@ def main(args):
 
     # generate realistic national IDs for all patients (wrt. gender, dob)
     # random chinese names are also given for all of the patients
-    preprocess_patients(root)
+    # preprocess_patients(root)
 
     # adjust shifted dates of all the admissions
     # and icustays (wrt. patient's anchor year)
-    preprocess_admissions(root)
-    preprocess_icustays(root)
+    # preprocess_admissions(root)
+    # preprocess_icustays(root)
 
     # adjust shifted dates of all labevents and chartevents
-    preprocess_labevents(root)
-    preprocess_chartevents(root)
+    preprocess_labevents(root, chunk_size=args.chunk_size)
+    preprocess_chartevents(root, chunk_size=args.chunk_size)
 
 
 if __name__ == "__main__":
