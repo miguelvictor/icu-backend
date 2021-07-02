@@ -392,9 +392,12 @@ class ChartEvent(models.Model):
         ),
     )
 
+    def __str__(self):
+        return f"{self.patient.name}的 {self.icuevent.label}"
+
     class Meta:
-        verbose_name = _("chart event")
-        verbose_name_plural = _("chart events")
+        verbose_name = _("ICU Chart Event")
+        verbose_name_plural = _("ICU Chart Events")
 
 
 class LabItem(models.Model):

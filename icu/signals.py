@@ -10,7 +10,11 @@ from .models import Admission, AppUser, ChartEvent, ICUStay, LabEvent, Patient
 
 
 @receiver(pre_save, sender=AppUser)
-def doctor_pre_save_handler(sender, instance, **kwargs):
+def appuser_pre_save_handler(sender, instance, **kwargs):
+    # generate default national ID for superusers because why not
+    if instance.is_superuser and instance.national_id == "":
+        instance.national_id = validator.fake_id()
+
     # get info from the patient's national ID
     info = validator.get_info(instance.national_id)
     if info is False:

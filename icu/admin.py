@@ -2,7 +2,16 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import ugettext_lazy as _
 
-from .models import AppUser, LabEvent, LabItem, Patient, Admission, ICUStay, ICUEvent
+from .models import (
+    AppUser,
+    ChartEvent,
+    LabEvent,
+    LabItem,
+    Patient,
+    Admission,
+    ICUStay,
+    ICUEvent,
+)
 from .filters import (
     ICUStayDischargedFilter,
     AdmissionDischargedFilter,
@@ -180,6 +189,23 @@ class ICUEventAdmin(admin.ModelAdmin):
     )
 
 
+class ICUChartEventAdmin(admin.ModelAdmin):
+    list_display = ("get_patient_name", "get_chartevent_label", "value")
+    list_per_page = 20
+
+    def get_patient_name(self, obj):
+        return obj.patient.name
+
+    def get_chartevent_label(self, obj):
+        label = obj.icuevent.label
+        return "-" if label is None else label
+
+    get_patient_name.admin_order_field = "patient"
+    get_patient_name.short_description = _("Patient Name")
+    get_chartevent_label.admin_order_field = "icuevent"
+    get_chartevent_label.short_description = _("Chart Event Label")
+
+
 class LabItemAdmin(admin.ModelAdmin):
     search_fields = ("itemid", "label", "fluid", "category", "loinc_code")
     list_display = ("itemid", "label", "category")
@@ -190,7 +216,26 @@ class LabItemAdmin(admin.ModelAdmin):
 
 
 class LabEventAdmin(admin.ModelAdmin):
+    list_display = (
+        "labevent_id",
+        "get_patient_name",
+        "get_labitem_label",
+        "value",
+        "valueuom",
+    )
     list_per_page = 20
+
+    def get_patient_name(self, obj):
+        return obj.patient.name
+
+    def get_labitem_label(self, obj):
+        label = obj.lab_item.label
+        return "-" if label is None else label
+
+    get_patient_name.admin_order_field = "patient"
+    get_patient_name.short_description = _("Patient Name")
+    get_labitem_label.admin_order_field = "lab_item"
+    get_labitem_label.short_description = _("Label")
 
 
 # Core Module
@@ -201,6 +246,7 @@ admin.site.register(Admission, AdmissionAdmin)
 # ICU Module
 admin.site.register(ICUStay, ICUStayAdmin)
 admin.site.register(ICUEvent, ICUEventAdmin)
+admin.site.register(ChartEvent, ICUChartEventAdmin)
 
 # Hospital Module
 admin.site.register(LabItem, LabItemAdmin)
