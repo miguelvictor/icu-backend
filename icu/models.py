@@ -372,6 +372,7 @@ class ChartEvent(models.Model):
     )
     valuenum = models.FloatField(
         _("value (numeric)"),
+        null=True,
         blank=True,
         help_text=_(
             "The numeric format of the same value. "
