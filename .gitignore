@@ -1,10 +1,12 @@
 .DS_Store
 .env
+ignore.txt
 __pycache__
 
 *.mo
 *.sqlite3
 *.ipynb
+*.pkl
 icu/fixtures/*.jsonl
 scripts/*.csv
 scripts/*.jsonl

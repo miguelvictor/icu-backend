@@ -18,10 +18,12 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_crontab",
     "rest_framework",
     "rest_framework_simplejwt",
     "corsheaders",
     "icu",
+    "predictors",
 ]
 
 MIDDLEWARE = [
@@ -135,3 +137,8 @@ REST_FRAMEWORK = {
 
 # CORS settings
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000"]
+
+# crontab stuff
+CRONJOBS = [
+    ("* * * * *", "predictors.cron.run_model_inference"),
+]

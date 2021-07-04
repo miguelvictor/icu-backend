@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
+from django.utils.formats import date_format
 from django.utils.translation import ugettext_lazy as _
 from uuid import uuid4
 
@@ -28,7 +29,7 @@ class AppUser(AbstractUser):
     gender = models.CharField(
         _("gender"), max_length=1, editable=False, choices=GENDER_CHOICES
     )
-    contact_no = models.CharField(_("Contact Number"), max_length=150, blank=True)
+    contact_no = models.CharField(_("Contact Number"), max_length=30, blank=True)
     date_of_birth = models.DateField(_("Date of Birth"), editable=False, null=True)
     worker_id = models.UUIDField(
         _("worker ID"),
@@ -43,6 +44,12 @@ class AppUser(AbstractUser):
 
     def __str__(self):
         return f"{self.username}: {self.email}"
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["national_id"]),
+            models.Index(fields=["worker_id"]),
+        ]
 
 
 class Patient(models.Model):
@@ -62,7 +69,7 @@ class Patient(models.Model):
     )
     email = models.EmailField(_("email"), null=True, blank=True)
     contact_no = models.CharField(
-        _("contact number"), max_length=150, null=True, blank=True
+        _("Contact Number"), max_length=150, null=True, blank=True
     )
     address = models.TextField(_("address"), null=True, blank=True)
     dod = models.DateTimeField(_("Date of Death"), null=True, blank=True)
@@ -348,24 +355,31 @@ class ICUEvent(models.Model):
 class ChartEvent(models.Model):
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     admission = models.ForeignKey(Admission, on_delete=models.CASCADE)
-    icustay = models.ForeignKey(ICUStay, on_delete=models.CASCADE)
+    icustay = models.ForeignKey(
+        ICUStay, on_delete=models.CASCADE, verbose_name=_("ICU Stay")
+    )
     charttime = models.DateTimeField(
-        _("chart time"),
+        _("Chart Time"),
         help_text=_(
             "Records the time at which an observation was made, "
             "and is usually the closest proxy to the time the data was actually measured."
         ),
     )
     storetime = models.DateTimeField(
-        _("store time"),
+        _("Store Time"),
         help_text=_(
             "Records the time at which an observation was manually input or "
             "manually validated by a member of the clinical staff."
         ),
     )
-    icuevent = models.ForeignKey(ICUEvent, on_delete=models.CASCADE)
-    value = models.TextField(
+    icuevent = models.ForeignKey(
+        ICUEvent, on_delete=models.CASCADE, verbose_name=_("ICU Event")
+    )
+    value = models.CharField(
         _("value"),
+        max_length=255,
+        null=True,
+        blank=True,
         help_text=_(
             "Contains the value measured for the concept identified by the ITEMID."
         ),
@@ -379,8 +393,10 @@ class ChartEvent(models.Model):
             "If data is not numeric, this field is null."
         ),
     )
-    valueuom = models.TextField(
+    valueuom = models.CharField(
         _("unit of measurement"),
+        max_length=255,
+        null=True,
         blank=True,
         help_text=_("The unit of measurement for the value, if appropriate."),
     )
@@ -393,7 +409,12 @@ class ChartEvent(models.Model):
     )
 
     def __str__(self):
-        return f"{self.patient.name}的 {self.icuevent.label}"
+        patient_name = self.patient.name
+        chart_time = date_format(
+            self.charttime, format="DATETIME_FORMAT", use_l10n=True
+        )
+        label = self.icuevent.label
+        return f"【{patient_name}】{label} 指标（{chart_time}）"
 
     class Meta:
         verbose_name = _("ICU Chart Event")
@@ -456,7 +477,7 @@ class LabItem(models.Model):
 
 
 class LabEvent(models.Model):
-    labevent_id = models.AutoField(_("Lab Event ID"), primary_key=True)
+    labevent_id = models.AutoField(_("Laboratory Event ID"), primary_key=True)
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE)
     admission = models.ForeignKey(
         Admission,
@@ -474,7 +495,11 @@ class LabEvent(models.Model):
             "e.g. blood gas measurements made on the same sample of blood."
         ),
     )
-    lab_item = models.ForeignKey(LabItem, on_delete=models.CASCADE)
+    lab_item = models.ForeignKey(
+        LabItem,
+        on_delete=models.CASCADE,
+        verbose_name=_("Laboratory Item"),
+    )
     charttime = models.DateTimeField(
         _("Chart Time"),
         help_text=_(
@@ -555,6 +580,14 @@ class LabEvent(models.Model):
             "are present as three underscores: ___. A NULL comment indicates no comment was made for the row."
         ),
     )
+
+    def __str__(self):
+        patient_name = self.patient.name
+        chart_time = date_format(
+            self.charttime, format="DATETIME_FORMAT", use_l10n=True
+        )
+        label = self.lab_item.label
+        return f"【{patient_name}】{label} 指标（{chart_time}）"
 
     class Meta:
         verbose_name = _("Laboratory Event")

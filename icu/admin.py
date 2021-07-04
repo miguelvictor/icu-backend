@@ -172,11 +172,6 @@ class ICUStayAdmin(admin.ModelAdmin):
 
 
 class ICUEventAdmin(admin.ModelAdmin):
-    search_fields = ("itemid", "label", "abbreviation", "category")
-    list_display = ("itemid", "label", "category")
-    list_filter = ("linksto",)
-    list_per_page = 20
-    readonly_fields = ("itemid",)
     fieldsets = (
         (
             _("Basic Information"),
@@ -187,11 +182,34 @@ class ICUEventAdmin(admin.ModelAdmin):
             {"fields": ["linksto", "param_type", "lownormalvalue", "highnormalvalue"]},
         ),
     )
+    list_display = ("itemid", "label", "category")
+    list_filter = ("linksto",)
+    list_per_page = 20
+    readonly_fields = ("itemid",)
+    search_fields = ("itemid", "label", "abbreviation", "category")
 
 
 class ICUChartEventAdmin(admin.ModelAdmin):
-    list_display = ("get_patient_name", "get_chartevent_label", "value")
+    fieldsets = (
+        (None, {"fields": ["patient", "admission", "icustay", "icuevent"]}),
+        (_("Chart & Store Times"), {"fields": ["charttime", "storetime"]}),
+        (_("Measurements"), {"fields": ["value", "valuenum", "valueuom", "warning"]}),
+    )
+    list_display = (
+        "get_patient_name",
+        "get_chartevent_label",
+        "charttime",
+        "get_value",
+    )
+    list_filter = ("charttime", "storetime")
     list_per_page = 20
+    raw_id_fields = ("patient", "admission", "icustay", "icuevent")
+    search_fields = (
+        "icuevent__itemid",
+        "icuevent__label",
+        "patient__national_id",
+        "patient__name",
+    )
 
     def get_patient_name(self, obj):
         return obj.patient.name
@@ -200,10 +218,15 @@ class ICUChartEventAdmin(admin.ModelAdmin):
         label = obj.icuevent.label
         return "-" if label is None else label
 
+    def get_value(self, obj):
+        return f"{obj.value} {obj.valueuom}"
+
     get_patient_name.admin_order_field = "patient"
     get_patient_name.short_description = _("Patient Name")
     get_chartevent_label.admin_order_field = "icuevent"
-    get_chartevent_label.short_description = _("Chart Event Label")
+    get_chartevent_label.short_description = _("Label")
+    get_value.admin_order_field = "value"
+    get_value.short_description = _("Value")
 
 
 class LabItemAdmin(admin.ModelAdmin):
@@ -216,14 +239,39 @@ class LabItemAdmin(admin.ModelAdmin):
 
 
 class LabEventAdmin(admin.ModelAdmin):
+    fieldsets = (
+        (None, {"fields": ["patient", "admission", "lab_item"]}),
+        (_("Chart & Store Times"), {"fields": ["charttime", "storetime"]}),
+        (
+            _("Measurements"),
+            {
+                "fields": [
+                    "specimen_id",
+                    "value",
+                    "valuenum",
+                    "valueuom",
+                    "ref_range_lower",
+                    "ref_range_upper",
+                ]
+            },
+        ),
+        (_("More Information"), {"fields": ["flag", "priority", "comments"]}),
+    )
     list_display = (
-        "labevent_id",
         "get_patient_name",
         "get_labitem_label",
-        "value",
-        "valueuom",
+        "charttime",
+        "get_value",
     )
+    list_filter = ("charttime", "storetime")
     list_per_page = 20
+    raw_id_fields = ("patient", "admission", "lab_item")
+    search_fields = (
+        "lab_item__itemid",
+        "lab_item__label",
+        "patient__national_id",
+        "patient__name",
+    )
 
     def get_patient_name(self, obj):
         return obj.patient.name
@@ -232,10 +280,15 @@ class LabEventAdmin(admin.ModelAdmin):
         label = obj.lab_item.label
         return "-" if label is None else label
 
+    def get_value(self, obj):
+        return f"{obj.value} {obj.valueuom}"
+
     get_patient_name.admin_order_field = "patient"
     get_patient_name.short_description = _("Patient Name")
     get_labitem_label.admin_order_field = "lab_item"
     get_labitem_label.short_description = _("Label")
+    get_value.admin_order_field = "value"
+    get_value.short_description = _("Value")
 
 
 # Core Module

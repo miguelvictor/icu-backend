@@ -6,5 +6,6 @@ admin.site.site_header = _("ICU Monitoring System")
 
 urlpatterns = [
     path("api/v1/", include("icu.urls")),
+    path("api/v1/", include("predictors.urls")),
     path("admin/", admin.site.urls),
 ]

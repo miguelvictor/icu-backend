@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-06-26 00:32+0800\n"
+"POT-Creation-Date: 2021-07-03 14:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,41 +22,78 @@ msgstr ""
 msgid "ICU Monitoring System"
 msgstr "ICU病人健康管理和预测系统"
 
-#: icu/admin.py:21
-msgid "Basic Information"
-msgstr "基本信息"
+#: icu/admin.py:27
+msgid "Personal info"
+msgstr ""
 
-#: icu/admin.py:24
+#: icu/admin.py:39
+msgid "Employment Information"
+msgstr "职位信息"
+
+#: icu/admin.py:43 icu/admin.py:75
 msgid "Contact Information"
 msgstr "联系方式"
 
-#: icu/admin.py:25
+#: icu/admin.py:47
+msgid "Permissions"
+msgstr "权限"
+
+#: icu/admin.py:58
+msgid "Important dates"
+msgstr ""
+
+#: icu/admin.py:72 icu/admin.py:177
+msgid "Basic Information"
+msgstr "基本信息"
+
+#: icu/admin.py:76
 msgid "Other Information"
 msgstr "其他信息"
 
-#: icu/admin.py:42
+#: icu/admin.py:89
 msgid "Patient Information"
 msgstr "患者基本信息"
 
-#: icu/admin.py:54
+#: icu/admin.py:100
 msgid "Admission Information"
 msgstr "患者入院记录信息"
 
-#: icu/admin.py:64
+#: icu/admin.py:110
 msgid "Discharge Information"
 msgstr "患者出院记录信息"
 
-#: icu/admin.py:74
+#: icu/admin.py:120
 msgid "ER Department"
 msgstr "ER 部门"
 
-#: icu/admin.py:83 icu/admin.py:105 icu/models.py:48
+#: icu/admin.py:141 icu/admin.py:171 icu/admin.py:225 icu/admin.py:269
+#: icu/models.py:62
 msgid "Patient Name"
 msgstr "患者姓名"
 
-#: icu/admin.py:98
+#: icu/admin.py:147
 msgid "ICU Hospitalization Time"
 msgstr ""
+
+#: icu/admin.py:181
+msgid "More Information"
+msgstr "更多信息"
+
+#: icu/admin.py:195
+msgid "Measurements"
+msgstr ""
+
+#: icu/admin.py:196
+msgid "Chart & Store Times"
+msgstr "测量时间"
+
+#: icu/admin.py:227 icu/admin.py:271 icu/models.py:435
+msgid "Label"
+msgstr "指标"
+
+#: icu/admin.py:229 icu/admin.py:273
+msgid "Value"
+msgstr "测量值"
 
 #: icu/apps.py:8
 msgid "ICU"
@@ -86,21 +123,113 @@ msgstr ""
 msgid "Divorced"
 msgstr ""
 
+#: icu/choices.py:70
+msgid "White"
+msgstr ""
+
+#: icu/choices.py:71
+msgid "Black/African American"
+msgstr ""
+
+#: icu/choices.py:72
+msgid "Asian"
+msgstr ""
+
+#: icu/choices.py:73
+msgid "Hispanic/Latino"
+msgstr ""
+
+#: icu/choices.py:74
+msgid "American Indian/Alaska Native"
+msgstr ""
+
+#: icu/choices.py:75
+msgid "Unknown"
+msgstr ""
+
+#: icu/choices.py:83
+msgid "Ambulatory Observation"
+msgstr ""
+
+#: icu/choices.py:84
+msgid "Direct Emergency"
+msgstr ""
+
+#: icu/choices.py:85
+msgid "Direct Observation"
+msgstr ""
+
+#: icu/choices.py:86
+msgid "Elective"
+msgstr ""
+
+#: icu/choices.py:87
+msgid "EU Observation"
+msgstr ""
+
+#: icu/choices.py:88
+msgid "EW Emergency"
+msgstr ""
+
+#: icu/choices.py:89
+msgid "Observation Admit"
+msgstr ""
+
+#: icu/choices.py:90
+msgid "Surgical Same Day Admission"
+msgstr ""
+
+#: icu/choices.py:91
+msgid "Urgent"
+msgstr ""
+
+#: icu/choices.py:101
+msgid "Date and time"
+msgstr ""
+
+#: icu/choices.py:102
+msgid "Numeric"
+msgstr ""
+
+#: icu/choices.py:103
+msgid "Text"
+msgstr ""
+
+#: icu/choices.py:104
+msgid "Solution"
+msgstr ""
+
+#: icu/choices.py:105
+msgid "Processes"
+msgstr ""
+
+#: icu/choices.py:106
+msgid "Checkbox"
+msgstr ""
+
+#: icu/choices.py:107
+msgid "Numeric with tag"
+msgstr ""
+
 #: icu/filters.py:6
 msgid "Already Discharged in ICU?"
 msgstr "是否已出 ICU"
 
-#: icu/filters.py:11 icu/filters.py:32
+#: icu/filters.py:11 icu/filters.py:33 icu/filters.py:55
 msgid "Yes"
 msgstr ""
 
-#: icu/filters.py:12 icu/filters.py:33
+#: icu/filters.py:12 icu/filters.py:34 icu/filters.py:56
 msgid "No"
 msgstr ""
 
-#: icu/filters.py:27
+#: icu/filters.py:28
 msgid "Already Discharged in Hospital?"
 msgstr "是否已出院"
+
+#: icu/filters.py:50
+msgid "Patient Died?"
+msgstr "患者是否已死亡"
 
 #: icu/managers.py:8
 msgid "The Username must be set"
@@ -118,115 +247,119 @@ msgstr ""
 msgid "Superuser must have is_superuser=True."
 msgstr ""
 
-#: icu/models.py:23 icu/models.py:44
+#: icu/models.py:24 icu/models.py:58
 msgid "National ID"
 msgstr "身份证号"
 
-#: icu/models.py:28 icu/models.py:50
+#: icu/models.py:30 icu/models.py:64
 msgid "gender"
 msgstr "性别"
 
-#: icu/models.py:29
+#: icu/models.py:32
 msgid "Contact Number"
 msgstr "电话号码"
 
-#: icu/models.py:30 icu/models.py:52
+#: icu/models.py:33 icu/models.py:66
 msgid "Date of Birth"
 msgstr "生日日期"
 
-#: icu/models.py:31
+#: icu/models.py:35
 msgid "worker ID"
 msgstr "工号"
 
-#: icu/models.py:32
+#: icu/models.py:40
 msgid "position"
 msgstr "职位"
 
-#: icu/models.py:33
+#: icu/models.py:41
 msgid "Start Date"
 msgstr "入职时间"
 
-#: icu/models.py:42
+#: icu/models.py:56
 msgid "patient ID"
 msgstr "患者编号"
 
-#: icu/models.py:54 icu/models.py:160
+#: icu/models.py:68
 msgid "ethnicity"
 msgstr "民族"
 
-#: icu/models.py:56
+#: icu/models.py:70
 msgid "email"
 msgstr "邮箱"
 
-#: icu/models.py:58
+#: icu/models.py:72
 msgid "contact number"
 msgstr "电话号码"
 
-#: icu/models.py:60
+#: icu/models.py:74
 msgid "address"
 msgstr "地址"
 
-#: icu/models.py:61
+#: icu/models.py:75
 msgid "Date of Death"
 msgstr "死亡日期"
 
-#: icu/models.py:89
+#: icu/models.py:77
 msgid "age"
 msgstr "年龄"
 
-#: icu/models.py:99
+#: icu/models.py:83 icu/models.py:191
+msgid "Dead?"
+msgstr "是否已死亡"
+
+#: icu/models.py:95
 msgid "patient"
 msgstr "患者"
 
-#: icu/models.py:100
+#: icu/models.py:96
 msgid "patients"
 msgstr "患者记录"
 
-#: icu/models.py:105
+#: icu/models.py:100
 msgid "Admission ID"
 msgstr "病案号"
 
-#: icu/models.py:107
+#: icu/models.py:103
 msgid "Admission Time"
 msgstr "入院时间"
 
-#: icu/models.py:110
+#: icu/models.py:106
 msgid "Provides the date and time the patient was admitted to the hospital."
 msgstr ""
 
-#: icu/models.py:114
+#: icu/models.py:110
 msgid "Discharge Time"
 msgstr "出院时间"
 
-#: icu/models.py:118
+#: icu/models.py:114
 msgid ""
 "Provides the date and time the patient was discharged from the hospital."
 msgstr ""
 
-#: icu/models.py:122
+#: icu/models.py:118
 msgid "Death Time"
 msgstr "死亡时间"
 
-#: icu/models.py:126
+#: icu/models.py:122
 msgid ""
 "Provides the time of in-hospital death for the patient. Note that this is "
 "only present if the patient died in-hospital, and is almost always the same "
 "as the dischtime field."
 msgstr ""
 
-#: icu/models.py:132
+#: icu/models.py:128
 msgid "Admission Type"
 msgstr "入院种类"
 
-#: icu/models.py:135
+#: icu/models.py:131
 msgid "Useful for classifying the urgency of the admission."
 msgstr ""
 
-#: icu/models.py:138
+#: icu/models.py:134
 msgid "Admission Location"
 msgstr "入院位置"
 
-#: icu/models.py:142
+#: icu/models.py:139
 msgid ""
 "Provides information about the location of the patient prior to arriving at "
 "the hospital. Note that as the emergency room is technically a clinic, "
@@ -234,151 +367,147 @@ msgid ""
 "admission location."
 msgstr ""
 
-#: icu/models.py:148
+#: icu/models.py:145
 msgid "Discharge Location"
 msgstr "出院位置"
 
-#: icu/models.py:152
+#: icu/models.py:150
 msgid ""
 "The disposition of the patient after they are discharged from the hospital."
 msgstr ""
 
-#: icu/models.py:155
+#: icu/models.py:153
 msgid "insurance"
 msgstr "保险"
 
-#: icu/models.py:156
+#: icu/models.py:154
 msgid "language"
 msgstr "母语"
 
-#: icu/models.py:158
+#: icu/models.py:156
 msgid "marital status"
 msgstr "婚姻状况"
 
-#: icu/models.py:162
+#: icu/models.py:163
 msgid "ED Registration Time"
 msgstr ""
 
-#: icu/models.py:166
+#: icu/models.py:167
 msgid ""
 "The date and time at which the patient was registered from the emergency "
 "department."
 msgstr ""
 
-#: icu/models.py:170
+#: icu/models.py:171
 msgid "ED Discharge Time"
 msgstr "ED 出院时间"
 
-#: icu/models.py:174
+#: icu/models.py:175
 msgid ""
 "The date and time at which the patient was discharged from the emergency "
 "department."
 msgstr ""
 
-#: icu/models.py:178
+#: icu/models.py:179
 msgid "Hospital Expire Flag"
 msgstr "患者是否已死亡"
 
-#: icu/models.py:181
+#: icu/models.py:182
 msgid ""
 "This is a binary flag which indicates whether the patient died within the "
 "given hospitalization. 1 indicates death in the hospital, and 0 indicates "
 "survival to hospital discharge."
 msgstr ""
 
-#: icu/models.py:186
+#: icu/models.py:187
 msgid "Discharged?"
 msgstr "是否已出院"
 
-#: icu/models.py:190
-msgid "Dead?"
-msgstr "是否已死亡"
-
-#: icu/models.py:205
+#: icu/models.py:208
 msgid "admission"
 msgstr "入院"
 
-#: icu/models.py:206
+#: icu/models.py:209
 msgid "admissions"
 msgstr "入院记录"
 
-#: icu/models.py:212
+#: icu/models.py:215
 msgid "ICU Stay ID"
 msgstr "ICU 患者编号"
 
-#: icu/models.py:214
+#: icu/models.py:217
 msgid "First Care Unit"
 msgstr ""
 
-#: icu/models.py:216
+#: icu/models.py:219
 msgid "The first ICU type in which the patient was cared for."
 msgstr ""
 
-#: icu/models.py:219
+#: icu/models.py:222
 msgid "Last Care Unit"
 msgstr ""
 
-#: icu/models.py:221
+#: icu/models.py:224
 msgid "The last ICU type in which the patient was cared for."
 msgstr ""
 
-#: icu/models.py:224
+#: icu/models.py:227
 msgid "Time In"
 msgstr ""
 
-#: icu/models.py:227
+#: icu/models.py:230
 msgid "Provides the date and time the patient was transferred into the ICU."
 msgstr ""
 
-#: icu/models.py:231
+#: icu/models.py:234
 msgid "Time Out"
 msgstr ""
 
-#: icu/models.py:235
+#: icu/models.py:238
 msgid "Provides the date and time the patient was transferred out of the ICU."
 msgstr ""
 
-#: icu/models.py:239
+#: icu/models.py:242
 msgid "ICU Discharged?"
 msgstr "是否已出 ICU"
 
-#: icu/models.py:243
+#: icu/models.py:246
 msgid "Length of Stay"
 msgstr "住 ICU 天数"
 
-#: icu/models.py:264
+#: icu/models.py:268
 msgid "ICU stay"
 msgstr ""
 
-#: icu/models.py:265
-msgid "ICU stays"
-msgstr "入 ICU 记录"
-
 #: icu/models.py:269
-msgid "item id"
+msgid "ICU stays"
+msgstr "入住 ICU 记录"
+
+#: icu/models.py:273 icu/models.py:426
+msgid "Item ID"
 msgstr ""
 
-#: icu/models.py:271
+#: icu/models.py:275
 msgid "label"
 msgstr ""
 
-#: icu/models.py:273
+#: icu/models.py:277
 msgid "Describes the concept which is represented by this item."
 msgstr ""
 
-#: icu/models.py:276
+#: icu/models.py:280
 msgid "abbreviation"
 msgstr ""
 
-#: icu/models.py:278
+#: icu/models.py:282
 msgid "Lists a common abbreviation for the label."
 msgstr ""
 
-#: icu/models.py:281
-msgid "linksto"
+#: icu/models.py:285
+msgid "Links To"
 msgstr ""
 
-#: icu/models.py:284
+#: icu/models.py:289
 msgid ""
 "Provides the table name which the data links to. For example, a value of "
 "‘chartevents’ indicates that the itemid of the given row is contained in the "
@@ -387,11 +516,11 @@ msgid ""
 "other event table (e.g. IOEVENTS, CHARTEVENTS, etc)."
 msgstr ""
 
-#: icu/models.py:292
+#: icu/models.py:297 icu/models.py:451
 msgid "category"
 msgstr ""
 
-#: icu/models.py:295
+#: icu/models.py:300
 msgid ""
 "Provides some information of the type of data the itemid corresponds to. "
 "Examples include ‘ABG’, which indicates the measurement is sourced from an "
@@ -399,11 +528,11 @@ msgid ""
 "administered through an intravenous line, and so on."
 msgstr ""
 
-#: icu/models.py:302
-msgid "unit name"
-msgstr ""
+#: icu/models.py:307
+msgid "Unit Name"
+msgstr "指标单位"
 
-#: icu/models.py:306
+#: icu/models.py:312
 msgid ""
 "Specifies the unit of measurement used for the itemid. This column is not "
 "always available, and this may be because the unit of measurement varies, a "
@@ -413,111 +542,278 @@ msgid ""
 "the valueuom column in CHARTEVENTS."
 msgstr ""
 
-#: icu/models.py:315
-msgid "parameter type"
+#: icu/models.py:321
+msgid "Parameter Type"
 msgstr ""
 
-#: icu/models.py:318
+#: icu/models.py:325
 msgid ""
 "Describes the type of data which is recorded: a date, a number or a text "
 "field."
 msgstr ""
 
-#: icu/models.py:322
-msgid "low normal value"
+#: icu/models.py:329
+msgid "Low Normal Value"
 msgstr ""
 
-#: icu/models.py:324
+#: icu/models.py:333
 msgid ""
 "Stores the lowest but still considered normal value for the this measurement."
 msgstr ""
 
-#: icu/models.py:328
-msgid "high normal value"
-msgstr ""
-
 #: icu/models.py:337
-msgid "ICU event"
+msgid "High Normal Value"
 msgstr ""
 
-#: icu/models.py:338
-msgid "ICU events"
+#: icu/models.py:351 icu/models.py:376
+msgid "ICU Event"
 msgstr ""
 
-#: icu/models.py:346
-msgid "chart time"
-msgstr ""
+#: icu/models.py:352
+msgid "ICU Events"
+msgstr "ICU 指标"
 
-#: icu/models.py:348
+#: icu/models.py:359
+msgid "ICU Stay"
+msgstr "入住 ICU 记录"
+
+#: icu/models.py:362 icu/models.py:504
+msgid "Chart Time"
+msgstr "测量时间"
+
+#: icu/models.py:364
 msgid ""
 "Records the time at which an observation was made, and is usually the "
 "closest proxy to the time the data was actually measured."
 msgstr ""
 
-#: icu/models.py:353
-msgid "store time"
-msgstr ""
+#: icu/models.py:369 icu/models.py:512
+msgid "Store Time"
+msgstr "保存时间"
 
-#: icu/models.py:355
+#: icu/models.py:371
 msgid ""
 "Records the time at which an observation was manually input or manually "
 "validated by a member of the clinical staff."
 msgstr ""
 
-#: icu/models.py:361
+#: icu/models.py:379 icu/models.py:521
 msgid "value"
 msgstr ""
 
-#: icu/models.py:363
+#: icu/models.py:384
 msgid "Contains the value measured for the concept identified by the ITEMID."
 msgstr ""
 
-#: icu/models.py:367
+#: icu/models.py:388
 msgid "value (numeric)"
 msgstr ""
 
-#: icu/models.py:370
+#: icu/models.py:392
 msgid ""
 "The numeric format of the same value. If data is not numeric, this field is "
 "null."
 msgstr ""
 
-#: icu/models.py:375
+#: icu/models.py:397
 msgid "unit of measurement"
 msgstr ""
 
-#: icu/models.py:377
+#: icu/models.py:401
 msgid "The unit of measurement for the value, if appropriate."
 msgstr ""
 
-#: icu/models.py:380
+#: icu/models.py:404
 msgid "warning"
 msgstr ""
 
-#: icu/models.py:382
+#: icu/models.py:406
 msgid ""
 "Specifies if a warning for this observation was manually documented by the "
 "care provider."
 msgstr ""
 
-#: icu/models.py:388
-msgid "chart event"
+#: icu/models.py:420
+msgid "ICU Chart Event"
 msgstr ""
 
-#: icu/models.py:389
-msgid "chart events"
+#: icu/models.py:421
+msgid "ICU Chart Events"
 msgstr ""
 
-#: icu/validators.py:11 icu/validators.py:17
+#: icu/models.py:429
+msgid ""
+"A unique identifier for a laboratory concept. itemid is unique to each row, "
+"and can be used to identify data in LABEVENTS associated with a specific "
+"concept."
+msgstr ""
+
+#: icu/models.py:437
+msgid "Describes the concept which is represented by the itemid."
+msgstr ""
+
+#: icu/models.py:440
+msgid "Fluid"
+msgstr ""
+
+#: icu/models.py:443
+msgid ""
+"Describes the substance on which the measurement was made. For example, "
+"chemistry measurements are frequently performed on blood, which is listed in "
+"this column as ‘BLOOD’. Many of these measurements are also acquirable on "
+"other fluids, such as urine, and this column differentiates these distinct "
+"concepts."
+msgstr ""
+
+#: icu/models.py:454
+msgid ""
+"Provides higher level information as to the type of measurement. For "
+"example, a category of ‘ABG’ indicates that the measurement is an arterial "
+"blood gas."
+msgstr ""
+
+#: icu/models.py:459
+msgid "LOINC Code"
+msgstr ""
+
+#: icu/models.py:463
+msgid ""
+"Contains the LOINC code associated with the given itemid. LOINC is an "
+"ontology which originally specified laboratory measurements but has since "
+"expanded to cover a wide range of clinically relevant concepts. LOINC openly "
+"provide a table which contains a large amount of detail about each LOINC "
+"code. This table is freely available online."
+msgstr ""
+
+#: icu/models.py:475 icu/models.py:501
+msgid "Laboratory Item"
+msgstr ""
+
+#: icu/models.py:476
+msgid "Laboratory Items"
+msgstr ""
+
+#: icu/models.py:480
+msgid "Lab Event ID"
+msgstr "Lab 事件 ID"
+
+#: icu/models.py:489
+msgid "Specimen ID"
+msgstr ""
+
+#: icu/models.py:491
+msgid ""
+"Uniquely denoted the specimen from which the lab measurement was made. Most "
+"lab measurements are made on patient derived samples (specimens) such as "
+"blood, urine, and so on. Often multiple measurements are made on the same "
+"sample. The specimen_id will group measurements made on the same sample, e."
+"g. blood gas measurements made on the same sample of blood."
+msgstr ""
+
+#: icu/models.py:506
+msgid ""
+"The time at which the laboratory measurement was charted. This is usually "
+"the time at which the specimen was acquired, and is usually significantly "
+"earlier than the time at which the measurement is available."
+msgstr ""
+
+#: icu/models.py:516
+msgid ""
+"The time at which the measurement was made available in the laboratory "
+"system. This is when the information would have been available to care "
+"providers."
+msgstr ""
+
+#: icu/models.py:523
+msgid "The result of the laboratory measurement."
+msgstr ""
+
+#: icu/models.py:526
+msgid "Value (Numeric)"
+msgstr ""
+
+#: icu/models.py:530
+msgid ""
+"If value is numeric, this contains the value cast as a numeric data type."
+msgstr ""
+
+#: icu/models.py:534
+msgid "Unit of Measurement"
+msgstr ""
+
+#: icu/models.py:537
+msgid "The unit of measurement for the laboratory concept."
+msgstr ""
+
+#: icu/models.py:540
+msgid "Ref Range Lower"
+msgstr ""
+
+#: icu/models.py:544
+msgid ""
+"Lower reference range indicating the normal range for the laboratory "
+"measurements. Values outside the reference ranges are considered abnormal."
+msgstr ""
+
+#: icu/models.py:548
+msgid "Ref Range Upper"
+msgstr ""
+
+#: icu/models.py:552
+msgid ""
+"Upper reference range indicating the normal range for the laboratory "
+"measurements. Values outside the reference ranges are considered abnormal."
+msgstr ""
+
+#: icu/models.py:556
+msgid "Flag"
+msgstr ""
+
+#: icu/models.py:560
+msgid ""
+"A brief string mainly used to indicate if the laboratory measurement is "
+"abnormal."
+msgstr ""
+
+#: icu/models.py:564
+msgid "Priority"
+msgstr ""
+
+#: icu/models.py:568
+msgid ""
+"The priority of the laboratory measurement: either routine or stat (urgent)."
+msgstr ""
+
+#: icu/models.py:572
+msgid "Comments"
+msgstr ""
+
+#: icu/models.py:575
+msgid ""
+"Deidentified free-text comments associated with the laboratory measurement. "
+"Usually these provide information about the sample, whether any "
+"notifications were made to care providers regarding the results, "
+"considerations for interpretation, or in some cases the comments contain the "
+"result of the laboratory itself. Comments which have been fully deidentified "
+"(i.e. no information content retained) are present as three underscores: "
+"___. A NULL comment indicates no comment was made for the row."
+msgstr ""
+
+#: icu/models.py:593
+msgid "Laboratory Event"
+msgstr "Lab 事件"
+
+#: icu/models.py:594
+msgid "Laboratory Events"
+msgstr "Lab 事件记录"
+
+#: icu/signals.py:22 icu/signals.py:50 icu/validators.py:9
 #, python-format
 msgid "%(value)s is not a valid national ID number."
 msgstr ""
 
 #~ msgid "Still in ICU"
 #~ msgstr "还在 ICU"
-
-#~ msgid "patient id"
-#~ msgstr "患者 ID"
 
 #~ msgid "date of birth"
 #~ msgstr "生日日期"
