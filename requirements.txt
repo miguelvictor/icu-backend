@@ -6,3 +6,4 @@ djangorestframework==3.12.4
 djangorestframework-camel-case==1.2.0
 djangorestframework-simplejwt==4.7.1
 id-validator==1.0.19
+numpy==1.21.0
