@@ -5,3 +5,4 @@ django-crontab==0.7.1
 djangorestframework==3.12.4
 djangorestframework-camel-case==1.2.0
 djangorestframework-simplejwt==4.7.1
+id-validator==1.0.19
